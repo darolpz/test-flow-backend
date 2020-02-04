@@ -1,13 +1,12 @@
 import { Router, Request, Response } from 'express';
-import express from 'express';
-import { getClientIp } from 'request-ip';
-import publicIp from 'public-ip';
 const routes = Router();
 
 
 routes.route('/').get(async (req: Request, res: Response) => {
-    const ip = getClientIp(req);
-    console.log(await publicIp.v4());
+    const ip = req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress;
+    console.log(ip);
     res.json({
         status: 200,
         mesage: 'ok',
