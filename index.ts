@@ -5,7 +5,6 @@ import cors from 'cors';
 
 const server = new Server();
 
-
 // Body parser
 server.app.use(bodyParser.urlencoded({ extended: true }));
 server.app.use(bodyParser.json());
@@ -13,9 +12,7 @@ server.app.use(bodyParser.json());
 // Rutas de mi app
 server.app.use('/', routes);
 
-
 server.app.use(cors());
 
 // Levantar express
 server.start();
-
