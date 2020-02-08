@@ -2,7 +2,7 @@ import Server from './classes/server';
 import routes from './routes/routes';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-
+require('dotenv').config();
 const server = new Server();
 
 // Body parser

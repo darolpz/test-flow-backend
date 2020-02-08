@@ -1,8 +1,11 @@
 import { Router } from 'express';
-import { ForecastController } from '../controlers/forecast.controller';
+import { ApiController } from '../controlers/api.controller';
 
-const forecastController = new ForecastController();
+const apiController = new ApiController();
 const router = Router();
-router.get('', forecastController.test);
+router.get('/v1/location', apiController.location);
+
+router.get('/v1/current/:city?', apiController.current);
+router.get('/v1/forecast/:city?', apiController.forecast);
 
 export default router;
