@@ -1,5 +1,5 @@
-import Server from './src/classes/server';
-import routes from './src/routes/routes';
+import Server from './classes/server';
+import routes from './routes/routes';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 const server = new Server();
