@@ -8,7 +8,7 @@ export class LocationService {
             const response = await Axios.get(ipApiUrl + ip);
             return response.data;
         } catch (error) {
-            throw error;
+            throw error.response.data;
         }
     }
 }

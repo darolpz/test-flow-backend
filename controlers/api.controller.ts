@@ -2,15 +2,14 @@ import { Request, Response } from 'express';
 import { LocationService } from '../services/location';
 import { WeatherService } from '../services/weather';
 import { ForecastService } from '../services/forecast';
-import Axios from 'axios';
 export class ApiController {
 
     public async location(req: Request, res: Response) {
-
-        const ip = req.headers['x-forwarded-for'] ||
-            req.connection.remoteAddress ||
-            req.socket.remoteAddress;
         try {
+            const ip = req.headers['x-forwarded-for'] ||
+                req.connection.remoteAddress ||
+                req.socket.remoteAddress;
+
             const data = await LocationService.GetLocation(ip);
             res.json({
                 status: 200,
@@ -27,22 +26,17 @@ export class ApiController {
     }
 
     public async current(req: Request, res: Response) {
-        const ip = req.headers['x-forwarded-for'] ||
-            req.connection.remoteAddress ||
-            req.socket.remoteAddress;
-        let city = req.params.city;
-
-        if (city === undefined || city === null) {
-            const locationData = await LocationService.GetLocation(ip);
-            city = locationData.city;
-        }
-
-        const weather = await WeatherService.GetWeather(city);
         try {
+            const ip = req.headers['x-forwarded-for'] ||
+                req.connection.remoteAddress ||
+                req.socket.remoteAddress;
+            const city = req.params.city;
+
+            const weather = (city === undefined || city === null) ? await WeatherService.GetWeatherByIP(ip) : await WeatherService.GetWeather(city);
             res.json({
                 status: 200,
                 mesage: 'Weather data got succesfully',
-                weather: weather
+                data: weather
             });
         } catch (error) {
             res.json({
@@ -54,27 +48,23 @@ export class ApiController {
     }
 
     public async forecast(req: Request, res: Response) {
-        const ip = req.headers['x-forwarded-for'] ||
-            req.connection.remoteAddress ||
-            req.socket.remoteAddress;
-        let city = req.params.city;
-
-        if (city === undefined || city === null) {
-            const locationData = await LocationService.GetLocation(ip);
-            city = locationData.city;
-        }
-
-        const weather = await ForecastService.GetForecast(city);
         try {
+            const ip = req.headers['x-forwarded-for'] ||
+                req.connection.remoteAddress ||
+                req.socket.remoteAddress;
+            const city = req.params.city;
+
+            const forecast = (city === undefined || city === null) ? await ForecastService.GetForecastByIP(ip) : await ForecastService.GetForecast(city);
+
             res.json({
                 status: 200,
-                mesage: 'Weather data got succesfully',
-                weather: weather
+                mesage: 'Forecast data got succesfully',
+                data: forecast
             });
         } catch (error) {
             res.json({
                 status: 400,
-                mesage: 'Error trying to get weather data',
+                mesage: 'Error trying to get forecast data',
                 error: error
             });
         }
