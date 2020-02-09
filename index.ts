@@ -16,4 +16,4 @@ server.app.use(cors());
 // Levantar express
 server.start();
 
-export default server;
+module.exports = server;

@@ -5,7 +5,6 @@ export default class Server {
     public app: express.Application;
     public port: number = 3000;
 
-    /* private static instance: Server | undefined; */
     constructor() {
         this.app = express();
     }
@@ -15,12 +14,4 @@ export default class Server {
             console.log(`Server running in port ${this.port}!`);
         });
     }
-
-    /*  public static getInstance(): Server {
-         if (this.instance === undefined) {
-             this.instance = new Server();
-         }
-         return this.instance;
-     } */
-
 }

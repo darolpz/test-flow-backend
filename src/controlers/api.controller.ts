@@ -31,7 +31,6 @@ export class ApiController {
                 req.connection.remoteAddress ||
                 req.socket.remoteAddress;
             const city = req.params.city;
-
             const weather = (city === undefined || city === null) ? await WeatherService.GetWeatherByIP(ip) : await WeatherService.GetWeather(city);
             res.json({
                 status: 200,
@@ -53,9 +52,7 @@ export class ApiController {
                 req.connection.remoteAddress ||
                 req.socket.remoteAddress;
             const city = req.params.city;
-
             const forecast = (city === undefined || city === null) ? await ForecastService.GetForecastByIP(ip) : await ForecastService.GetForecast(city);
-
             res.json({
                 status: 200,
                 mesage: 'Forecast data got succesfully',
@@ -68,6 +65,13 @@ export class ApiController {
                 error: error
             });
         }
+    }
+
+    public async errorHandler(req: Request, res: Response) {
+        res.json({
+            status: 404,
+            mesage: 'Page not found'
+        });
     }
 
 }
