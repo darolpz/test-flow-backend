@@ -1,5 +1,5 @@
 const request = require('supertest');
-const server = require('../index');
+const server = require('../src/index');
 
 test('Get location endpoint', async () => {
     const res = await request(server.app)
